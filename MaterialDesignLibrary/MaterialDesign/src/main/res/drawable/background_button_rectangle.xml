@@ -3,7 +3,7 @@
 
     <item android:drawable="@drawable/background_button">
     </item>
-    <item android:id="@+id/shape_background">
+    <item android:id="@+id/shape_bacground">
         <shape android:shape="rectangle" >
             <corners android:radius="2dp" />
 

@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesigndemo.R;
 
 
@@ -27,8 +26,6 @@ public class ButtonsActivity extends Activity {
         findViewById(R.id.buttonFloatSmall).setBackgroundColor(color);
         findViewById(R.id.buttonIcon).setBackgroundColor(color);
         findViewById(R.id.buttonFloat).setBackgroundColor(color);
-
-        ((ButtonFlat)findViewById(R.id.buttonflat)).getTextView().setTextSize(12f);
     }  
     
 

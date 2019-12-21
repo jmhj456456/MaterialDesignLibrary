@@ -4,30 +4,34 @@
     <declare-styleable name="CustomAttributes">
 
         <!-- Color of ripple animation -->
-        <attr name="MLrippleColor" format="color|reference" />
+        <attr name="rippleColor" format="color|reference" />
         <!-- Speed of ripple animation -->
-        <attr name="MLrippleSpeed" format="float" />
+        <attr name="rippleSpeed" format="float" />
         <!-- indicate if the slider must show number indicator -->
-        <attr name="MLshowNumberIndicator" format="boolean" />
+        <attr name="showNumberIndicator" format="boolean" />
         <!-- in progress view indicate max value of progress -->
-        <attr name="MLmax" format="integer" />
+        <attr name="max" format="integer" />
         <!-- in progress view indicate min value of progress -->
-        <attr name="MLmin" format="integer" />
+        <attr name="min" format="integer" />
         <!-- in progress view indicate value of progress -->
-        <attr name="MLvalue" format="integer" />
+        <attr name="value" format="integer" />
         <!-- in progress view indicate value of progress -->
-        <attr name="MLprogress" format="integer" />
-        <attr name="MLringWidth" format="dimension" />
+        <attr name="progress" format="integer" />
+        <attr name="ringWidth" format="dimension" />
         <!-- in switche's view indicate state of view -->
-        <attr name="MLchecked" format="boolean" />
+        <attr name="check" format="boolean" />
+        <attr name="checkBoxSize" format="dimension" />
+        <attr name="thumbSize" format="dimension" />
         <!-- in float button indicate icon resource -->
-        <attr name="MLiconDrawable" format="integer" />
+        <attr name="iconDrawable" format="integer" />
+        <!-- in button whitch contains drawable indicate icon resource -->
+        <attr name="iconSize" format="dimension" />
         <!-- in float button indicate if must start with animation -->
-        <attr name="MLanimated" format="boolean" />
+        <attr name="animate" format="boolean" />
         <!-- set the border of the ripple frame -->
-        <attr name="MLrippleBorderRadius" format="float" />
+        <attr name="rippleBorderRadius" format="float" />
         <!-- if true, delays calls to OnClickListeners until ripple effect ends -->
-        <attr name="MLclickAfterRipple" format="boolean" />
+        <attr name="clickAfterRipple" format="boolean" />
     </declare-styleable>
 
 </resources>

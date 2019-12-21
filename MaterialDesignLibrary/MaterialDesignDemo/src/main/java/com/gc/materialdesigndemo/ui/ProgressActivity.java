@@ -10,7 +10,6 @@ import android.view.Window;
 
 import com.gc.materialdesign.views.ProgressBarDeterminate;
 import com.gc.materialdesign.views.ProgressBarIndeterminateDeterminate;
-import com.gc.materialdesign.views.Slider;
 import com.gc.materialdesigndemo.R;
 
 
@@ -38,8 +37,6 @@ public class ProgressActivity extends Activity {
 		progressTimer.start();
 		progressBarIndeterminateDeterminate = (ProgressBarIndeterminateDeterminate) findViewById(R.id.progressBarIndeterminateDeterminate);
 		progressTimer2.start();
-
-		((Slider)findViewById(R.id.sliderNumber)).setValue(300);
     } 
     
     

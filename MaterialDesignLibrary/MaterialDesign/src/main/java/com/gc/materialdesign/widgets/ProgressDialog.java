@@ -28,7 +28,6 @@ public class ProgressDialog extends android.app.Dialog{
 	
 	public ProgressDialog(Context context,String title) {
 		super(context, android.R.style.Theme_Translucent);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		this.title = title;
 		this.context = context;
 	}

@@ -21,10 +21,6 @@ public class CustomView extends RelativeLayout{
 	public CustomView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 	}
-
-	public CustomView(Context context, AttributeSet attrs, int style){
-		super(context, attrs, style);
-	}
 	
 	@Override
 	public void setEnabled(boolean enabled) {

@@ -1,11 +1,9 @@
 package com.gc.materialdesign.views;
 
 import com.gc.materialdesign.R;
-import com.gc.materialdesign.utils.AttributesUtils;
 import com.gc.materialdesign.utils.Utils;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -37,17 +35,11 @@ public abstract class Button extends CustomView {
 	public Button(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		setDefaultProperties();
-		TypedArray typedArray = context.obtainStyledAttributes(attrs.getStyleAttribute(), AttributesUtils.attrs);
-		clickAfterRipple = AttributesUtils.getClickAfterRipple(getResources(),attrs,typedArray,true);
-		setAttributes(attrs,typedArray);
-		int rippleColor = AttributesUtils.getRippleColor(getResources(),attrs,typedArray);
-		if(rippleColor != -1)
-			this.rippleColor = rippleColor;
-		rippleSpeed = AttributesUtils.getRippleSpeed(getResources(), attrs, typedArray);
-		if(rippleSpeed != -1) rippleSpeed = Utils.dpToPx(6, getResources());
-		typedArray.recycle();
+		clickAfterRipple = attrs.getAttributeBooleanValue(MATERIALDESIGNXML,
+				"animate", true);
+		setAttributes(attrs);
 		beforeBackground = backgroundColor;
-		if (this.rippleColor == null)
+		if (rippleColor == null)
 			rippleColor = makePressColor();
 	}
 
@@ -61,7 +53,7 @@ public abstract class Button extends CustomView {
 	}
 
 	// Set atributtes of XML to View
-	abstract protected void setAttributes(AttributeSet attrs, TypedArray typedArray);
+	abstract protected void setAttributes(AttributeSet attrs);
 
 	// ### RIPPLE EFFECT ###
 
@@ -173,7 +165,7 @@ public abstract class Button extends CustomView {
 		try {
 			LayerDrawable layer = (LayerDrawable) getBackground();
 			GradientDrawable shape = (GradientDrawable) layer
-					.findDrawableByLayerId(R.id.shape_background);
+					.findDrawableByLayerId(R.id.shape_bacground);
 			shape.setColor(backgroundColor);
 			rippleColor = makePressColor();
 		} catch (Exception ex) {
@@ -181,19 +173,8 @@ public abstract class Button extends CustomView {
 		}
 	}
 
-	@Override
-	public boolean performClick() {
-		if (onClickListener != null)
-			onClickListener.onClick(this);
-		return onClickListener != null;
-	}
-
 	public void setRippleSpeed(float rippleSpeed) {
 		this.rippleSpeed = rippleSpeed;
-	}
-
-	public void setRippleColor(Integer rippleColor) {
-		this.rippleColor = rippleColor;
 	}
 
 	public float getRippleSpeed() {

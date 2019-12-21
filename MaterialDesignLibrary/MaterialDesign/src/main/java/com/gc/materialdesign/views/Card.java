@@ -1,11 +1,9 @@
 package com.gc.materialdesign.views;
 
 import com.gc.materialdesign.R;
-import com.gc.materialdesign.utils.AttributesUtils;
 import com.gc.materialdesign.utils.Utils;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -35,22 +33,27 @@ public class Card extends CustomView {
 	
 	public Card(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		TypedArray typedArray = context.obtainStyledAttributes(attrs.getStyleAttribute(), AttributesUtils.attrs);
-		setAttributes(attrs, typedArray);
+		setAttributes(attrs);
 	}
 	
 	
 	// Set atributtes of XML to View
-	protected void setAttributes(AttributeSet attrs, TypedArray style){
-
-
+	protected void setAttributes(AttributeSet attrs){
 		
 		setBackgroundResource(R.drawable.background_button_rectangle);
 		//Set background Color
 		// Color by resource
-		int bacgroundColor = AttributesUtils.getBackgroundColor(getResources(),attrs,style);
-		if(bacgroundColor != -1)
+		int bacgroundColor = attrs.getAttributeResourceValue(ANDROIDXML,"background",-1);
+		if(bacgroundColor != -1){
 			setBackgroundColor(getResources().getColor(bacgroundColor));
+		}else{
+			// Color by hexadecimal
+			String background = attrs.getAttributeValue(ANDROIDXML,"background");
+			if(background != null)
+				setBackgroundColor(Color.parseColor(background));
+			else
+				setBackgroundColor(this.backgroundColor);
+		}
 	}
 	
 	// Set color of background
@@ -59,7 +62,7 @@ public class Card extends CustomView {
 		if(isEnabled())
 			beforeBackground = backgroundColor;
 		LayerDrawable layer = (LayerDrawable) getBackground();
-		GradientDrawable shape =  (GradientDrawable) layer.findDrawableByLayerId(R.id.shape_background);
+		GradientDrawable shape =  (GradientDrawable) layer.findDrawableByLayerId(R.id.shape_bacground);
 		shape.setColor(backgroundColor);
 	}
 	

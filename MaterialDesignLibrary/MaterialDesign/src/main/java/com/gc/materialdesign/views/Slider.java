@@ -2,7 +2,6 @@ package com.gc.materialdesign.views;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,28 +20,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gc.materialdesign.R;
-import com.gc.materialdesign.utils.AttributesUtils;
 import com.gc.materialdesign.utils.Utils;
 import com.nineoldandroids.view.ViewHelper;
 
 public class Slider extends CustomView {
 
     private int backgroundColor = Color.parseColor("#4CAF50");
-    private Ball ball;
+    private Ball   ball;
     private Bitmap bitmap;
     private int max = 100;
     private int min = 0;
-    private NumberIndicator numberIndicator;
+    private NumberIndicator        numberIndicator;
     private OnValueChangedListener onValueChangedListener;
-    private boolean placedBall = false;
-    private boolean press = false;
+    private boolean placedBall          = false;
+    private boolean press               = false;
     private boolean showNumberIndicator = false;
-    private int value = 0;
+    private int     value               = 0;
 
     public Slider(Context context, AttributeSet attrs) {
         super(context, attrs);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs.getStyleAttribute(), AttributesUtils.attrs);
-        setAttributes(attrs, typedArray);
+        setAttributes(attrs);
     }
 
     public int getMax() {
@@ -77,7 +74,7 @@ public class Slider extends CustomView {
     }
 
     public void setValue(final int value) {
-        if (!placedBall)
+        if (placedBall == false)
             post(new Runnable() {
 
                 @Override
@@ -87,10 +84,9 @@ public class Slider extends CustomView {
             });
         else {
             this.value = value;
-            float division = (ball.xFin - ball.xIni) / (max - min);
-            int _value = this.value - min; // this line is new, you were using parameter value (thats incorrect, obviously)
+            float division = (ball.xFin - ball.xIni) / max;
             ViewHelper.setX(ball,
-                    _value * division + getHeight() / 2 - ball.getWidth() / 2);
+                    value * division + getHeight() / 2 - ball.getWidth() / 2);
             ball.changeBackground();
         }
 
@@ -98,8 +94,7 @@ public class Slider extends CustomView {
 
     @Override
     public void invalidate() {
-        if (ball != null)
-            ball.invalidate();
+        ball.invalidate();
         super.invalidate();
     }
 
@@ -117,7 +112,6 @@ public class Slider extends CustomView {
     public boolean onTouchEvent(MotionEvent event) {
         isLastTouch = true;
         if (isEnabled()) {
-            getParent().requestDisallowInterceptTouchEvent(true);
             if (event.getAction() == MotionEvent.ACTION_DOWN
                     || event.getAction() == MotionEvent.ACTION_MOVE) {
                 if (numberIndicator != null
@@ -255,7 +249,7 @@ public class Slider extends CustomView {
     }
 
     // Set atributtes of XML to View
-    protected void setAttributes(AttributeSet attrs, TypedArray style){
+    protected void setAttributes(AttributeSet attrs) {
 
         setBackgroundResource(R.drawable.background_transparent);
 
@@ -265,14 +259,22 @@ public class Slider extends CustomView {
 
         // Set background Color
         // Color by resource
-        int bacgroundColor = AttributesUtils.getBackgroundColor(getResources(),attrs,style);
-        if (bacgroundColor != -1)
-            setBackgroundColor(bacgroundColor);
+        int bacgroundColor = attrs.getAttributeResourceValue(ANDROIDXML,
+                "background", -1);
+        if (bacgroundColor != -1) {
+            setBackgroundColor(getResources().getColor(bacgroundColor));
+        } else {
+            // Color by hexadecimal
+            int background = attrs.getAttributeIntValue(ANDROIDXML, "background", -1);
+            if (background != -1)
+                setBackgroundColor(background);
+        }
 
-        showNumberIndicator = AttributesUtils.getShowNumberIndicator(getResources(),attrs,style,false);
-        min = AttributesUtils.getMin(getResources(),attrs,style,0);
-        max = AttributesUtils.getMax(getResources(),attrs,style,100);
-        value = AttributesUtils.getValue(getResources(),attrs,style,min);
+        showNumberIndicator = attrs.getAttributeBooleanValue(MATERIALDESIGNXML,
+                "showNumberIndicator", false);
+        min = attrs.getAttributeIntValue(MATERIALDESIGNXML, "min", 0);
+        max = attrs.getAttributeIntValue(MATERIALDESIGNXML, "max", 0);
+        value = attrs.getAttributeIntValue(MATERIALDESIGNXML, "value", min);
 
         ball = new Ball(getContext());
         RelativeLayout.LayoutParams params = new LayoutParams(Utils.dpToPx(20,
@@ -316,7 +318,7 @@ public class Slider extends CustomView {
                 setBackgroundResource(R.drawable.background_checkbox);
                 LayerDrawable layer = (LayerDrawable) getBackground();
                 GradientDrawable shape = (GradientDrawable) layer
-                        .findDrawableByLayerId(R.id.shape_background);
+                        .findDrawableByLayerId(R.id.shape_bacground);
                 shape.setColor(backgroundColor);
             } else {
                 setBackgroundResource(R.drawable.background_switch_ball_uncheck);
@@ -329,17 +331,17 @@ public class Slider extends CustomView {
 
     class Indicator extends RelativeLayout {
 
-        boolean animate = true;
+        boolean animate               = true;
         // Final size after animation
-        float finalSize = 0;
+        float   finalSize             = 0;
         // Final y position after animation
-        float finalY = 0;
+        float   finalY                = 0;
         boolean numberIndicatorResize = false;
         // Size of number indicator
-        float size = 0;
+        float   size                  = 0;
         // Position of number indicator
-        float x = 0;
-        float y = 0;
+        float   x                     = 0;
+        float   y                     = 0;
 
         public Indicator(Context context) {
             super(context);
@@ -393,11 +395,10 @@ public class Slider extends CustomView {
     class NumberIndicator extends Dialog {
 
         Indicator indicator;
-        TextView numberIndicator;
+        TextView  numberIndicator;
 
         public NumberIndicator(Context context) {
             super(context, android.R.style.Theme_Translucent);
-            requestWindowFeature(Window.FEATURE_NO_TITLE);
         }
 
         @Override
